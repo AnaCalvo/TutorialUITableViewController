@@ -20,6 +20,13 @@ class FruitsTableViewController: UITableViewController {
                   "Kiwi fruit", "Lemon", "Lime", "Lychee", "Mandarine", "Mango",
                   "Melon", "Nectarine", "Olive", "Orange", "Papaya", "Peach",
                   "Pear", "Pineapple", "Raspberry", "Strawberry"]
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.tableView.isEditing = true
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
 
         // MARK: - Table view data source
 
@@ -45,6 +52,28 @@ class FruitsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Section \(section)"
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .none
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedObject = self.fruits[sourceIndexPath.row]
+        fruits.remove(at: sourceIndexPath.row)
+        fruits.insert(movedObject, at: destinationIndexPath.row)
+        NSLog("%@", "\(sourceIndexPath.row) => \(destinationIndexPath.row) \(fruits)")
+        // To check for correctness enable: self.tableView.reloadData()
+    }
+    
+    //Enables the reorder control only for A rows
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        let rowData = fruits[indexPath.row]
+        return rowData.hasPrefix("A")
     }
 
 }
