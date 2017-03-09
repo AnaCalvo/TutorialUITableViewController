@@ -29,8 +29,11 @@ class FruitsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
-
-       cell.textLabel?.text = fruits[indexPath.row]
+        
+        let fruitName = fruits[indexPath.row]
+        cell.textLabel?.text = fruitName
+        cell.detailTextLabel?.text = "Delicious!"
+        cell.imageView?.image = UIImage(named: fruitName)
 
         return cell
     }
